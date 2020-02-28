@@ -3,11 +3,12 @@ const express = require('express');
 const router = express();
 const carsRouter = require('./cars/cars-router');
 router.use(express.json());
-router.use('/cars', carsRouter);
 
-router.use('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('cars are running!');
 });
+
+router.use('/cars', carsRouter);
 
 router.use((req, res) => {
   res
