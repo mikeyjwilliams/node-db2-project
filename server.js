@@ -1,12 +1,13 @@
 const express = require('express');
+
 const router = express();
 const carsRouter = require('./cars/cars-router');
+router.use(express.json());
+router.use('/cars', carsRouter);
 
 router.use('/', (req, res) => {
   res.send('cars are running!');
 });
-
-router.use('/cars', carsRouter);
 
 router.use((req, res) => {
   res
@@ -15,6 +16,7 @@ router.use((req, res) => {
 });
 
 router.use((err, req, res, next) => {
+  console.log(err);
   res.status(500).json({ errorMessage: 'internal server error' });
 });
 
