@@ -7,7 +7,7 @@ const checkCarData = require('../middleware/checkCarData');
  * CREATE
  * POST /cars
  * REQUIRED: vin - 17 letters numbers, make - string, model - string, mileage - int
- * Not required: transsmionType - string, title - string
+ * Not required: transmissionType - string, title - string
  * @returns: object of created car.
  */
 router.post('/', checkCarData(), async (req, res, next) => {
