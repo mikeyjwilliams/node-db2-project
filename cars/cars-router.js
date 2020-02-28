@@ -3,6 +3,13 @@ const db = require('../data/config');
 const router = express.Router();
 const checkCarData = require('../middleware/checkCarData');
 
+/**
+ * CREATE
+ * POST /cars
+ * REQUIRED: vin - 17 letters numbers, make - string, model - string, mileage - int
+ * Not required: transsmionType - string, title - string
+ * @returns: object of created car.
+ */
 router.post('/', checkCarData(), async (req, res, next) => {
   const { vin, make, model, mileage, transmissionType, title } = req.body;
   try {
