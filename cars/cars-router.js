@@ -33,4 +33,24 @@ router.post('/', checkCarData(), async (req, res, next) => {
   }
 });
 
+/**
+ * READ
+ * GET /cars
+ * checks if cars.length > 0 if not 400
+ * else display cars.
+ */
+router.get('/', async (req, res, next) => {
+  try {
+    const cars = await db('cars').select('*');
+    if (cars.length > 0) {
+      res.status(200).json(cars);
+    } else {
+      res.status(400).json({ message: 'sorry no cars available' });
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
 module.exports = router;
