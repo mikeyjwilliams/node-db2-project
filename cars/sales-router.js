@@ -57,7 +57,7 @@ router.get('/', async (req, res, next) => {
     if (salesData.length > 0) {
       res.status(200).json(salesData);
     } else {
-      res.status(404).json({ message: 'no sales at ID to display.' });
+      res.status(404).json({ message: 'no sales to display.' });
     }
   } catch (err) {
     console.log(err);
