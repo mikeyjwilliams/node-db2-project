@@ -4,7 +4,7 @@ exports.up = async function(knex) {
     tbl.string('sellers_name', 35).notNullable();
     tbl.string('buyers_name', 45).notNullable();
     tbl.date('sales_date').notNullable();
-    tbl.boolean('sold').notNullable();
+    tbl.boolean('sold').defaultTo(0);
     tbl
       .integer('cars_id')
       .references('id')
@@ -13,5 +13,5 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function(knex) {
-  await knex.schema.dropTablesIfExists('sales');
+  await knex.schema.dropTableIfExists('sales');
 };
