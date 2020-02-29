@@ -53,4 +53,35 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+/**
+ *?stretch
+ * UPDATE
+ * put /cars/:id
+ * update a specific car
+ */
+router.put('/:id', checkCarData(), async (req, res, next) => {
+  const { id } = req.params;
+  const { vin, make, model, mileage, transmissionType, title } = req.body;
+  const updateCar = {
+    vin: vin,
+    make: make,
+    model: model,
+    mileage: mileage,
+    transmissionType: transmissionType || 'n/a',
+    title: title || 'n/a',
+  };
+  try {
+    const cardId = await db('cars')
+      .where({ id: id })
+      .update(updateCar);
+    const updatedCar = await db('cars')
+      .where('id', cardId)
+      .first();
+    res.status(200).json(updatedCar);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
 module.exports = router;
