@@ -36,7 +36,7 @@ router.post('/', checkCarData(), async (req, res, next) => {
 /**
  * READ
  * GET /cars
- * checks if cars.length > 0 if not 400
+ * Description: checks if cars.length > 0 if not 400
  * else display cars.
  */
 router.get('/', async (req, res, next) => {
@@ -54,10 +54,10 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
- *?stretch
+ *? stretch
  * UPDATE
  * put /cars/:id
- * update a specific car
+ * Description: update a specific car
  */
 router.put('/:id', checkCarData(), async (req, res, next) => {
   const { id } = req.params;
@@ -80,6 +80,27 @@ router.put('/:id', checkCarData(), async (req, res, next) => {
     res.status(200).json(updatedCar);
   } catch (err) {
     console.log(err);
+    next(err);
+  }
+});
+
+/**
+ * DELETE
+ * delete /cars/:id
+ * Description: deletes a specific car id.
+ */
+router.delete('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const removeCar = await db('cars')
+      .where({ id: id })
+      .del();
+    if (removeCar > 0) {
+      res.status(204).json(removeCar);
+    } else {
+      res.status(404).json({ message: 'car ID not found' });
+    }
+  } catch (err) {
     next(err);
   }
 });
