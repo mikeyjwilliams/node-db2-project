@@ -57,6 +57,27 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
+ * READ
+ * GET /cars/:id
+ * Description: get specific car by id.
+ */
+router.get('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const getCar = await db('cars')
+      .where({ id: id })
+      .select('*');
+    if (getCar.length === 1) {
+      res.status(200).json(getCar);
+    } else {
+      res.status(404).json({ message: 'could not find car ID' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
  *? stretch
  * UPDATE
  * put /cars/:id
