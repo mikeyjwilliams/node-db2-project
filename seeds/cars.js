@@ -1,7 +1,4 @@
 exports.seed = async function(knex) {
-  // Deletes ALL existing entries
-  await knex('cars').truncate();
-
   await knex('cars').insert([
     {
       vin: 'asdfghjk123456781',
