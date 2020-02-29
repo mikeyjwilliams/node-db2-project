@@ -19,18 +19,45 @@ router.post('/', async (req, res, next) => {
     sellers_name: sellers_name,
     buyers_name: buyers_name,
     sales_date: sales_date,
-    sold: sold || false,
+    sold: sold || 0,
     cars_id: id,
   };
   try {
     const [saleId] = await db('sales').insert(addSale);
-    const getSale = await db('sales')
-      .where('id', saleId)
-      .select();
+    const getSale = await db('sales').where({ id: saleId });
     if (getSale) {
-      res.json(201).json(getSale);
+      res.status(201).json(getSale);
     } else {
-      res.json(400).json({ message: 'car ID could not be found.' });
+      res.status(400).json({ message: 'car ID could not be found.' });
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
+router.get('/', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const salesData = await db('cars as c')
+      .join('sales as s', 'c.id', 's.cars_id')
+      .where('c.id', id)
+      .select(
+        'c.vin as vin',
+        'c.title as title',
+        'c.make as make',
+        'c.model as model',
+        'c.mileage as mileage',
+        'c.transmissionType as transmissionType',
+        's.sellers_name as sellers_name',
+        's.buyers_name as buyers_name',
+        's.sales_date as sales_date',
+        's.sold as sold'
+      );
+    if (salesData.length > 0) {
+      res.status(200).json(salesData);
+    } else {
+      res.status(404).json({ message: 'no sales at ID to display.' });
     }
   } catch (err) {
     console.log(err);
