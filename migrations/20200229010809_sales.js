@@ -3,7 +3,7 @@ exports.up = async function(knex) {
     tbl.increments('id');
     tbl.string('sellers_name', 35).notNullable();
     tbl.string('buyers_name', 45).notNullable();
-    tbl.date('sales_date').notNullable();
+    tbl.date('sales_date').nullable();
     tbl.boolean('sold').defaultTo(0);
     tbl.real('price').defaultTo(0);
     tbl
