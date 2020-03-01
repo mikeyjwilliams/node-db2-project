@@ -5,6 +5,7 @@ exports.up = async function(knex) {
     tbl.string('buyers_name', 45).notNullable();
     tbl.date('sales_date').notNullable();
     tbl.boolean('sold').defaultTo(0);
+    tbl.real('price').defaultTo(0);
     tbl
       .integer('cars_id')
       .references('id')
