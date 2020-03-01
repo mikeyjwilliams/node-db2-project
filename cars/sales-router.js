@@ -6,15 +6,27 @@ router.post('/', async (req, res, next) => {
   const { id } = req.params;
   const { sellers_name, buyers_name, sales_date, sold } = req.body;
 
+  //   //! could I put a check here to verify I have a ID?
+  //   if (!id) {
+  //     return res.status(404).json({ message: 'car ID could not be found' });
+  //   }
+
   if (!sellers_name) {
-    return res.status(400).json({ message: 'sellers_name is required.' });
+    return res.status(400).json({
+      message: 'sellers_name is required.',
+    });
   }
   if (!buyers_name) {
-    return res.status(400).json({ message: 'buyers_name is required.' });
+    return res.status(400).json({
+      message: 'buyers_name is required.',
+    });
   }
   if (!sales_date) {
-    return res.status(400).json({ message: 'sales_date is required.' });
+    return res.status(400).json({
+      message: 'sales_date is required.',
+    });
   }
+
   const addSale = {
     sellers_name: sellers_name,
     buyers_name: buyers_name,
@@ -28,7 +40,9 @@ router.post('/', async (req, res, next) => {
     if (getSale) {
       res.status(201).json(getSale);
     } else {
-      res.status(400).json({ message: 'car ID could not be found.' });
+      res.status(400).json({
+        message: 'car ID could not be found.',
+      });
     }
   } catch (err) {
     console.log(err);
@@ -45,6 +59,7 @@ router.get('/', async (req, res, next) => {
       .select(
         'c.vin as vin',
         'c.title as title',
+        's.price as price',
         'c.make as make',
         'c.model as model',
         'c.mileage as mileage',
@@ -64,5 +79,6 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
+router.get('/:salesId', async (req, res, next) => {});
 
 module.exports = router;
