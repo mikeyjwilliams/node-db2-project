@@ -3,9 +3,9 @@ exports.up = async function(knex) {
     tbl.increments('id');
     tbl.string('sellers_name', 35).notNullable();
     tbl.string('buyers_name', 45).notNullable();
-    tbl.date('sales_date').nullable();
-    tbl.boolean('sold').defaultTo(0);
-    tbl.real('price').defaultTo(0);
+    tbl.date('sales_date').notNullable();
+    tbl.boolean('sold').notNullable();
+    tbl.real('price').notNullable();
     tbl
       .integer('cars_id')
       .references('id')

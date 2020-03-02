@@ -18,7 +18,7 @@ exports.seed = async function(knex) {
     },
     {
       sellers_name: 'gina frost',
-      buyers_name: 'jackie goldman',
+      buyers_name: 'n/a',
       price: 0,
       sold: 0,
       cars_id: 2,
