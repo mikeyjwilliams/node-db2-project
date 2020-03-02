@@ -4,7 +4,7 @@ const db = require('../data/config');
 
 router.post('/', async (req, res, next) => {
   const { id } = req.params;
-  const { sellers_name, buyers_name, sales_date, sold } = req.body;
+  const { sellers_name, buyers_name, sales_date, price } = req.body;
 
   //   //! could I put a check here to verify I have a ID?
   //   if (!id) {
@@ -26,12 +26,16 @@ router.post('/', async (req, res, next) => {
       message: 'sales_date is required.',
     });
   }
+  if (!price) {
+    return res.status(400).json({ message: 'price is required' });
+  }
 
   const addSale = {
     sellers_name: sellers_name,
     buyers_name: buyers_name,
     sales_date: sales_date,
-    sold: sold || 0,
+    price: price,
+    sold: true,
     cars_id: id,
   };
   try {
@@ -79,6 +83,6 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
-router.get('/:salesId', async (req, res, next) => {});
+// router.get('/:salesId', async (req, res, next) => {});
 
 module.exports = router;
