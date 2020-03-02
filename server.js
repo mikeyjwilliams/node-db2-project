@@ -1,7 +1,11 @@
 const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
 
 const router = express();
 const carsRouter = require('./cars/cars-router');
+router.use(helmet());
+router.use(cors());
 router.use(express.json());
 
 router.get('/', (req, res) => {
