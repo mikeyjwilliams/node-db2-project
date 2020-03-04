@@ -9,6 +9,7 @@ router.use('/:id/sales', salesRouter);
 /**
  * CREATE
  * POST /cars
+ * checkCarData() middle ware
  * REQUIRED: vin - 17 letters numbers, make - string, model - string, mileage - int
  * Not required: transmissionType - string, title - string
  * @returns: object of created car.
@@ -81,6 +82,7 @@ router.get('/:id', async (req, res, next) => {
  *? stretch
  * UPDATE
  * put /cars/:id
+ * middle ware: checkCarData() => verify req.body data is correct.
  * Description: update a specific car
  */
 router.put('/:id', checkCarData(), async (req, res, next) => {
