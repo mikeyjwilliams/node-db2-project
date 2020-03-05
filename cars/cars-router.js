@@ -97,11 +97,11 @@ router.put('/:id', checkCarData(), async (req, res, next) => {
     title: title || 'n/a',
   };
   try {
-    const cardId = await db('cars')
+    await db('cars')
       .where({ id: id })
       .update(updateCar);
     const updatedCar = await db('cars')
-      .where('id', cardId)
+      .where('id', id)
       .first();
     res.status(200).json(updatedCar);
   } catch (err) {
